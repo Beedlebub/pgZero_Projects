@@ -6,16 +6,18 @@ import time
 # Set size of overall game window
 WIDTH = 1000
 HEIGHT = 600
-
 # Variables for animating background color
 blue = 130
 blue_forward = True
-
 # Ground
 ground_color = 0, 0, 139
 ground = Rect((0, 580), (1000, 20))
 # Player
 ninja = Actor('jumper-1', (WIDTH/2, HEIGHT/2))
+ninja_x_velocity = 0
+ninja_y_velocity = 0
+gravity = 1
+jumping = False
 # Platforms
 platform_01 = Rect((450, 500), (100, 10))  # Platform in center of screen
 platform_02 = Rect((300, 400), (100, 10))  # . Moving out left
@@ -23,8 +25,8 @@ platform_03 = Rect((600, 400), (100, 10))  # . Moving out right
 platform_04 = Rect((200, 300), (100, 10))  # . . Moving out left
 platform_05 = Rect((700, 300), (100, 10))  # . . Moving out right
 platform_06 = Rect((100, 200), (100, 10))  # . . . Moving out left
-platform_LT_x = 200  # Starting x position of left moving platform 
-platform_RT_x = 700  # Starting x position of right moving platform 
+platform_LT_x = 200  # Starting x position of left moving platform
+platform_RT_x = 700  # Starting x position of right moving platform
 platform_LT = Rect((platform_LT_x, 200), (100, 10))  # Left moving platform
 platform_RT = Rect((platform_RT_x, 200), (100, 10))  # Right moving platform
 platform_07 = Rect((800, 200), (100, 10))  # . . . Moving out right
@@ -46,17 +48,16 @@ def draw():
     screen.fill((173, 216, blue))
     # Overlays an image (with alpha) that is exact size of game window
     screen.blit('skyline_large', (0, 0))
-    # Draws the Actor we set up at start
-    ninja.draw()
     # Dynamically updates position of platforms for drawing them moving
     platform_LT = Rect((platform_LT_x, 200), (100, 10))  # Left moving platform
-    platform_RT = Rect((platform_RT_x, 200), (100, 10)
-                       )  # Right moving platform
+    platform_RT = Rect((platform_RT_x, 200), (100, 10))  # Right  platform
     platforms[10] = platform_LT
     platforms[11] = platform_RT
     # Draws all walkable surfaces by iterating through 'platforms' list
     for i in platforms:
         screen.draw.filled_rect(i, ground_color)
+    # Draws the Actor we set up at start
+    ninja.draw()
 
 
 def update():
@@ -66,6 +67,37 @@ def update():
     background_color_fade()
     # Moves platforms
     platform_mover()
+    # Moves player
+    ninja_move()
+
+
+def ninja_move():
+    # This sets the players movement characteristics
+
+    # We need to set these variables for global use, or the changes only stay
+    # within this function
+    global ninja_x_velocity, ninja_y_velocity, gravity, jumping
+    # Create simple gravity for player
+    if collision_check():
+        gravity = 1
+        ninja.y -= 1
+    if not collision_check():
+        ninja.y += gravity
+        if gravity <= 20:
+            gravity += 0.5
+    if (keyboard.left):
+        if (ninja.x > 40) and (ninja_x_velocity > -8):
+            ninja_x_velocity -= 2
+    if (keyboard.right):
+        if (ninja.x < 960) and (ninja_x_velocity < 8):
+            ninja_x_velocity += 2
+    ninja.x += ninja_x_velocity
+    if ninja_x_velocity > 0:
+        ninja_x_velocity -= 1
+    if ninja_x_velocity < 0:
+        ninja_x_velocity += 1
+    if ninja.x < 50 or ninja.x > 950:
+        ninja_x_velocity = 0
 
 
 def platform_mover():
@@ -96,8 +128,16 @@ def platform_mover():
             platform_RT_leftDir = True
 
 
+def collision_check():
+    collide = False
+    for i in platforms:
+        if ninja.colliderect(i):
+            collide = True
+    return collide
+
+
 def background_color_fade():
-    # This code cycles varaible up and then back down, changing the numeric 
+    # This code cycles varaible up and then back down, changing the numeric
     # value of blue in RGB color
 
     # We need to set these variables for global use, or the changes only stay
