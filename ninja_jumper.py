@@ -18,6 +18,7 @@ ninja_x_velocity = 0
 ninja_y_velocity = 0
 gravity = 1
 jumping = False
+jumped = False
 # Platforms
 platform_01 = Rect((450, 500), (100, 10))  # Platform in center of screen
 platform_02 = Rect((300, 400), (100, 10))  # . Moving out left
@@ -76,7 +77,11 @@ def ninja_move():
 
     # We need to set these variables for global use, or the changes only stay
     # within this function
-    global ninja_x_velocity, ninja_y_velocity, gravity, jumping
+    global ninja_x_velocity, ninja_y_velocity, gravity, jumping, jumped
+    # Facing forwards
+    if ninja_x_velocity == 0 and not jumped:
+        ninja.image = 'jumper-1'
+
     # Create simple gravity for player
     if collision_check():
         gravity = 1
@@ -85,19 +90,37 @@ def ninja_move():
         ninja.y += gravity
         if gravity <= 20:
             gravity += 0.5
+    # Left and right player movement
     if (keyboard.left):
         if (ninja.x > 40) and (ninja_x_velocity > -8):
             ninja_x_velocity -= 2
+            ninja.image = 'jumper-left'
     if (keyboard.right):
         if (ninja.x < 960) and (ninja_x_velocity < 8):
             ninja_x_velocity += 2
+            ninja.image = 'jumper-right'
     ninja.x += ninja_x_velocity
+    # Player velocity
     if ninja_x_velocity > 0:
         ninja_x_velocity -= 1
     if ninja_x_velocity < 0:
         ninja_x_velocity += 1
     if ninja.x < 50 or ninja.x > 950:
         ninja_x_velocity = 0
+    # Player jump
+    if (keyboard.up) and collision_check() and not jumped:
+        jumping = True
+        jumped = True
+        clock.schedule_unique(jumped_recently, 0.5)
+        ninja.image = 'jumper-up'
+        ninja_y_velocity = 95
+    if jumping and ninja_y_velocity > 25:
+        ninja_y_velocity = ninja_y_velocity - ((100 - ninja_y_velocity)/2)
+        print(ninja_y_velocity)
+        ninja.y -= ninja_y_velocity/3  # Jump height
+    else:
+        ninja_y_velocity = 0
+        jumping = False
 
 
 def platform_mover():
@@ -134,6 +157,11 @@ def collision_check():
         if ninja.colliderect(i):
             collide = True
     return collide
+
+
+def jumped_recently():
+    global jumped
+    jumped = False
 
 
 def background_color_fade():
