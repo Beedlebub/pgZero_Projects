@@ -2,8 +2,8 @@ import pgzrun
 # from pgzero import keyboard, screen
 # from pgzero.actor import Actor
 
-WIDTH = 800
-HEIGHT = 600
+WIDTH = 200
+HEIGHT = 200
 
 alien = Actor('alien')
 alien.pos = (0, 50)
