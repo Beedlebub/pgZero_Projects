@@ -1,1 +1,1 @@
-print('Hello, Brand!')
+print('\nHello, Brand!\n')
