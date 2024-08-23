@@ -1,7 +1,7 @@
 # Import additional modules
 import pgzrun
 import pygame
-import time
+# import time
 import random
 
 # Set size of overall game window
@@ -23,19 +23,19 @@ jumped = False
 allow_x = True
 timer = []
 # Platforms
-platform_01 = Rect((450, 500), (100, 10))  # Platform in center of screen
-platform_02 = Rect((300, 400), (100, 10))  # . Moving out left
-platform_03 = Rect((600, 400), (100, 10))  # . Moving out right
-platform_04 = Rect((200, 300), (100, 10))  # . . Moving out left
-platform_05 = Rect((700, 300), (100, 10))  # . . Moving out right
-platform_06 = Rect((100, 200), (100, 10))  # . . . Moving out left
+platform_01 = pygame.Rect((450, 500), (100, 10))  # Platform in center of screen
+platform_02 = pygame.Rect((300, 400), (100, 10))  # . Moving out left
+platform_03 = pygame.Rect((600, 400), (100, 10))  # . Moving out right
+platform_04 = pygame.Rect((200, 300), (100, 10))  # . . Moving out left
+platform_05 = pygame.Rect((700, 300), (100, 10))  # . . Moving out right
+platform_06 = pygame.Rect((100, 200), (100, 10))  # . . . Moving out left
 platform_LT_x = 200  # Starting x position of left moving platform
 platform_RT_x = 700  # Starting x position of right moving platform
-platform_LT = Rect((platform_LT_x, 200), (100, 10))  # Left moving platform
-platform_RT = Rect((platform_RT_x, 200), (100, 10))  # Right moving platform
-platform_07 = Rect((800, 200), (100, 10))  # . . . Moving out right
-platform_08 = Rect((0, 100), (100, 10))  # Top far left
-platform_09 = Rect((900, 100), (100, 10))  # Top far right
+platform_LT = pygame.Rect((platform_LT_x, 200), (100, 10))  # Left moving platform
+platform_RT = pygame.Rect((platform_RT_x, 200), (100, 10))  # Right moving platform
+platform_07 = pygame.Rect((800, 200), (100, 10))  # . . . Moving out right
+platform_08 = pygame.Rect((0, 100), (100, 10))  # Top far left
+platform_09 = pygame.Rect((900, 100), (100, 10))  # Top far right
 # Used to define all walkable surfaces
 platforms = [ground, platform_01, platform_02, platform_03, platform_04,
              platform_05, platform_06, platform_07, platform_08, platform_09,

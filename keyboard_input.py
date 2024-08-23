@@ -1,6 +1,6 @@
 import pgzrun
-# from pgzero import keyboard, screen
-# from pgzero.actor import Actor
+from pgzero import screen
+from pgzero.actor import Actor
 
 WIDTH = 200
 HEIGHT = 200

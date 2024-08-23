@@ -1,4 +1,6 @@
 import pgzrun
+from pgzero import screen
+from pgzero.actor import Actor
 
 WIDTH = 800
 HEIGHT = 600

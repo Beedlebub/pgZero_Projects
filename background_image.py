@@ -1,6 +1,6 @@
 import pgzrun
-# from pgzero import screen
-# from pgzero.actor import Actor
+from pgzero import screen
+from pgzero.actor import Actor
 
 WIDTH = 500
 HEIGHT = 500
@@ -13,7 +13,7 @@ background = Actor('background')
 
 
 def draw():
-    screen.clear()
+    screen.clear() # type: ignore
     background.draw()
     alien.draw()
 
