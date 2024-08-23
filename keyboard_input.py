@@ -1,43 +1,4 @@
 import pgzrun
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 from pgzero import screen
 from pgzero.actor import Actor
 
@@ -49,14 +10,14 @@ alien.pos = (0, 50)
 
 
 def draw():
-    screen.clear()
+    screen.clear() # type: ignore
     alien.draw()
 
 
 def update():
-    if keyboard.right:
+    if keyboard.right: # type: ignore
         alien.x = alien.x + 2
-    elif keyboard.left:
+    elif keyboard.left: # type: ignore
         alien.x = alien.x - 2
 
 

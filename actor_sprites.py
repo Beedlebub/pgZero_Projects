@@ -5,13 +5,13 @@ import pgzrun
 WIDTH = 500
 HEIGHT = 500
 
-alien = Actor('alien')
+alien = Actor('alien') # type: ignore
 alien.x = 0
 alien.y = 50
 
 
 def draw():
-    screen.clear()
+    screen.clear() # type: ignore
     alien.draw()
 
 
