@@ -7,8 +7,8 @@ HEIGHT = 600
 
 
 def draw():
-    screen.clear()
-    screen.draw.circle((400, 300), 30, 'white')
+    screen.clear() # type: ignore
+    screen.draw.circle((400, 300), 30, 'white') # type: ignore
 
 
 pgzrun.go()
